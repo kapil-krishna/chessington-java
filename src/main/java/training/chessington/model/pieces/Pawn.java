@@ -16,21 +16,65 @@ public class Pawn extends AbstractPiece {
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
 
-
         List<Move> array = new ArrayList();
-        Move move1 = new Move(new Coordinates(6, 4), new Coordinates(5, 4));
-        Move move2 = new Move(new Coordinates(1, 4), new Coordinates(2, 4));
 
-        if (!hasMoved) {
-            Move move3 = new Move(new Coordinates(1, 4), new Coordinates(3, 4));
-            array.add(move3);
-            Move move4 = new Move(new Coordinates(6, 4), new Coordinates(4, 4));
-            array.add(move4);
+        Coordinates proposed = moveProposal(from, 1, 0);
+
+        if (board.get(proposed) == null) {
+            array.add(new Move(from, proposed));
         }
 
-        array.add(move1);
-        array.add(move2);
+        if (openingMove(from) != from){
 
+            proposed = moveProposal(from, 2, 0);
+
+            List<Coordinates> proposals = new ArrayList<>();
+
+            proposals.add(moveProposal(from, 1, 0));
+            proposals.add(moveProposal(from, 2, 0));
+
+            boolean canMove = true;
+
+            for (Coordinates proposal : proposals) {
+                if (board.get(proposal) != null) {
+                    canMove = false;
+                }
+            }
+
+            if (canMove) {
+                Move move = new Move(from, proposed);
+                array.add(move);
+            }
+
+        }
         return array;
     }
+
+    public Coordinates moveProposal(Coordinates from, int rowDiff, int colDiff) {
+        Coordinates proposedPos;
+
+        if (colour == PlayerColour.WHITE) {
+            proposedPos = from.plus(-rowDiff, colDiff);
+        } else {
+            proposedPos = from.plus(rowDiff, colDiff);
+        }
+        return proposedPos;
+    }
+
+    public Coordinates openingMove(Coordinates from) {
+        Coordinates proposedPos = from;
+
+        if (colour == PlayerColour.WHITE && from.getRow() == 6) {
+            proposedPos = from.plus(-2, 0);
+        }
+
+        if (colour == PlayerColour.BLACK && from.getRow() == 1){
+            proposedPos = from.plus(+2, 0);
+        }
+
+        return proposedPos;
+    }
+
+
+
 }
