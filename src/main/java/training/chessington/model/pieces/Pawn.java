@@ -21,8 +21,16 @@ public class Pawn extends AbstractPiece {
         Move move1 = new Move(new Coordinates(6, 4), new Coordinates(5, 4));
         Move move2 = new Move(new Coordinates(1, 4), new Coordinates(2, 4));
 
+        if (!hasMoved) {
+            Move move3 = new Move(new Coordinates(1, 4), new Coordinates(3, 4));
+            array.add(move3);
+            Move move4 = new Move(new Coordinates(6, 4), new Coordinates(4, 4));
+            array.add(move4);
+        }
+
         array.add(move1);
         array.add(move2);
+
         return array;
     }
 }
