@@ -18,6 +18,13 @@ public class Pawn extends AbstractPiece {
 
         List<Move> array = new ArrayList();
 
+        if (from.getRow() >= 7 ||
+            from.getRow() <= 0 ||
+            from.getCol() >= 7 ||
+            from.getCol() <= 0 ){
+                return array;
+        }
+
         Coordinates proposed = moveProposal(from, 1, 0);
 
         if (board.get(proposed) == null) {
@@ -50,14 +57,30 @@ public class Pawn extends AbstractPiece {
         return array;
     }
 
+    public boolean inBounds (Coordinates proposedPos) {
+
+        return true;
+
+//        switch (colour) {
+//            case WHITE:
+//                return proposedPos.getRow() > 0;
+//            case BLACK:
+//                return proposedPos.getRow() < 8;
+//            default:
+//                return false;
+//        }
+    }
+
+
     public Coordinates moveProposal(Coordinates from, int rowDiff, int colDiff) {
-        Coordinates proposedPos;
+        Coordinates proposedPos = from;
 
         if (colour == PlayerColour.WHITE) {
             proposedPos = from.plus(-rowDiff, colDiff);
         } else {
             proposedPos = from.plus(rowDiff, colDiff);
         }
+
         return proposedPos;
     }
 
@@ -75,6 +98,26 @@ public class Pawn extends AbstractPiece {
         return proposedPos;
     }
 
+    public boolean inBounds (Coordinates from, int rowDiff, int colDiff) {
+        boolean inBounds = false;
 
+        int rowCheck = 0;
+
+
+
+        if (colour == PlayerColour.WHITE) {
+            rowCheck = (from.getRow() - rowDiff);
+        } else {
+            rowCheck = from.getRow() + rowDiff;
+        }
+
+        if (7 > rowCheck && rowCheck < 0 ) {
+
+        }
+
+
+        return inBounds;
+    }
 
 }
+
