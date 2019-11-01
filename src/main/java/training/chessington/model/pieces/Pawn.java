@@ -18,7 +18,7 @@ public class Pawn extends AbstractPiece {
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
 
         List<Move> allowedMoves = new ArrayList();
-        if (outOfBounds(from)) { return allowedMoves; }
+        if (board.outOfBounds(from)) { return allowedMoves; }
 
         final int range = onStartRow(from) ? 2 : 1;
 
@@ -47,7 +47,7 @@ public class Pawn extends AbstractPiece {
     }
 
     public boolean canCapture(Coordinates proposal, Board board){
-        return !isSpaceEmpty(proposal, board) && !outOfBounds(proposal) && board.get(proposal).getColour() != colour;
+        return !isSpaceEmpty(proposal, board) && !board.outOfBounds(proposal) && board.get(proposal).getColour() != colour;
     }
 
     // TODO replace with direction setter

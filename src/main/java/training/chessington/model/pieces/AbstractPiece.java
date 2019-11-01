@@ -31,10 +31,4 @@ public abstract class AbstractPiece implements Piece {
         return colour.toString() + " " + type.toString();
     }
 
-    protected Boolean outOfBounds(Coordinates toCheck){
-        return  toCheck.getRow() >= 7 ||
-                toCheck.getRow() <= 0 ||
-                toCheck.getCol() >= 7 ||
-                toCheck.getCol() <= 0;
-    }
 }

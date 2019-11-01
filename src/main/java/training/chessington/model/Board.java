@@ -50,5 +50,12 @@ public class Board {
         board[coords.getRow()][coords.getCol()] = piece;
     }
 
+    public Boolean outOfBounds(Coordinates toCheck){
+        return  toCheck.getRow() > 7 ||
+                toCheck.getRow() < 0 ||
+                toCheck.getCol() > 7 ||
+                toCheck.getCol() < 0;
+    }
+
 }
 
