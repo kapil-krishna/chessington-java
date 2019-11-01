@@ -13,111 +13,70 @@ public class Pawn extends AbstractPiece {
         super(Piece.PieceType.PAWN, colour);
     }
 
+
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
 
-        List<Move> array = new ArrayList();
+        List<Move> allowedMoves = new ArrayList();
+        if (outOfBounds(from)) { return allowedMoves; }
 
-        if (from.getRow() >= 7 ||
-            from.getRow() <= 0 ||
-            from.getCol() >= 7 ||
-            from.getCol() <= 0 ){
-                return array;
-        }
+        final int range = onStartRow(from) ? 2 : 1;
 
-        Coordinates proposed = moveProposal(from, 1, 0);
+        List<Coordinates> proposals = getHorizontalProposals(from, range);
 
-        if (board.get(proposed) == null) {
-            array.add(new Move(from, proposed));
-        }
+        for (Coordinates proposal : proposals){
 
-        if (openingMove(from) != from){
-
-            proposed = moveProposal(from, 2, 0);
-
-            List<Coordinates> proposals = new ArrayList<>();
-
-            proposals.add(moveProposal(from, 1, 0));
-            proposals.add(moveProposal(from, 2, 0));
-
-            boolean canMove = true;
-
-            for (Coordinates proposal : proposals) {
-                if (board.get(proposal) != null) {
-                    canMove = false;
-                }
+            if (isSpaceEmpty(proposal, board)){
+                //TODO maybe bounds check here
+                allowedMoves.add(new Move(from, proposal));
             }
-
-            if (canMove) {
-                Move move = new Move(from, proposed);
-                array.add(move);
-            }
-
         }
-        return array;
+
+        Coordinates captureRight = moveProposal(from, 1, 1);
+        Coordinates captureLeft = moveProposal(from, 1, -1);
+
+        if (canCapture(captureRight, board)) {
+            allowedMoves.add(new Move(from, captureRight));
+        }
+
+        if (canCapture(captureLeft, board)) {
+            allowedMoves.add(new Move(from, captureLeft));
+        }
+
+        return allowedMoves;
     }
 
-    public boolean inBounds (Coordinates proposedPos) {
-
-        return true;
-
-//        switch (colour) {
-//            case WHITE:
-//                return proposedPos.getRow() > 0;
-//            case BLACK:
-//                return proposedPos.getRow() < 8;
-//            default:
-//                return false;
-//        }
+    public boolean canCapture(Coordinates proposal, Board board){
+        return !isSpaceEmpty(proposal, board) && !outOfBounds(proposal) && board.get(proposal).getColour() != colour;
     }
 
-
+    // TODO replace with direction setter
     public Coordinates moveProposal(Coordinates from, int rowDiff, int colDiff) {
-        Coordinates proposedPos = from;
-
-        if (colour == PlayerColour.WHITE) {
-            proposedPos = from.plus(-rowDiff, colDiff);
-        } else {
-            proposedPos = from.plus(rowDiff, colDiff);
-        }
-
-        return proposedPos;
+        if (colour == PlayerColour.WHITE){ rowDiff *= -1; }
+        return from.plus(rowDiff, colDiff);
     }
 
-    public Coordinates openingMove(Coordinates from) {
-        Coordinates proposedPos = from;
-
-        if (colour == PlayerColour.WHITE && from.getRow() == 6) {
-            proposedPos = from.plus(-2, 0);
+    public List<Coordinates> getHorizontalProposals(Coordinates from, int range){
+        List<Coordinates> moveProposals = new ArrayList<>();
+        for (int step = 1; step <= range; step++){
+            moveProposals.add(moveProposal(from, step, 0));
         }
 
-        if (colour == PlayerColour.BLACK && from.getRow() == 1){
-            proposedPos = from.plus(+2, 0);
-        }
-
-        return proposedPos;
+        return moveProposals;
     }
 
-    public boolean inBounds (Coordinates from, int rowDiff, int colDiff) {
-        boolean inBounds = false;
-
-        int rowCheck = 0;
-
-
-
-        if (colour == PlayerColour.WHITE) {
-            rowCheck = (from.getRow() - rowDiff);
-        } else {
-            rowCheck = from.getRow() + rowDiff;
-        }
-
-        if (7 > rowCheck && rowCheck < 0 ) {
-
-        }
-
-
-        return inBounds;
+    public boolean isSpaceEmpty(Coordinates proposal, Board board){
+        return board.get(proposal) == null;
     }
 
+    public boolean onStartRow(Coordinates from){
+
+        // TODO replace once hasMove flag is set up correctly
+        switch (colour){
+            case WHITE: if (from.getRow() == 6) {return true;}
+            case BLACK: if (from.getRow() == 1) {return true;}
+        }
+        return false;
+    }
 }
 
