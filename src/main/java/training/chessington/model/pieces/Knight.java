@@ -20,20 +20,20 @@ public class Knight extends AbstractPiece {
         List<Move> allowedMoves = new ArrayList<>();
 
         List<Coordinates> possibleCoords = List.of(from.plus(1, 2),
-                from.plus(1, 2),
                 from.plus(1, -2),
                 from.plus(-1, 2),
                 from.plus(-1, -2),
-                from.plus(2, 2),
-                from.plus(2, -2),
+                from.plus(2, 1),
+                from.plus(2, -1),
                 from.plus(-2, 1),
                 from.plus(-2, -1));
 
         for (int i = 0; i < possibleCoords.size(); i++) {
-            if (colour != board.get(possibleCoords.get(i)).getColour()
+            if ((board.get(possibleCoords.get(i)).getColour() != colour)
                     && !(board.outOfBounds(possibleCoords.get(i)))) {
                 allowedMoves.add(new Move(from, possibleCoords.get(i)));
             }
+        }
 //        if (!(board.outOfBounds(from.plus(1,2)))) {
 //            allowedMoves.add(new Move(from, from.plus(1,2)));
 //        }
@@ -58,7 +58,6 @@ public class Knight extends AbstractPiece {
 //        if (!(board.outOfBounds(from.plus(-2,-1)))) {
 //            allowedMoves.add(new Move(from, from.plus(-2,-1)));
 //        }
-        }
         return allowedMoves;
     }
 }
