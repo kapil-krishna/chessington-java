@@ -57,5 +57,9 @@ public class Board {
                 toCheck.getCol() < 0;
     }
 
+    public boolean isSpaceEmpty(Coordinates proposal, Board board){
+        return board.get(proposal) == null;
+    }
+
 }
 

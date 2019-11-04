@@ -26,7 +26,7 @@ public class Pawn extends AbstractPiece {
 
         for (Coordinates proposal : proposals){
 
-            if (isSpaceEmpty(proposal, board)){
+            if (board.isSpaceEmpty(proposal, board)){
                 //TODO maybe bounds check here
                 allowedMoves.add(new Move(from, proposal));
             }
@@ -47,7 +47,9 @@ public class Pawn extends AbstractPiece {
     }
 
     public boolean canCapture(Coordinates proposal, Board board){
-        return !isSpaceEmpty(proposal, board) && !board.outOfBounds(proposal) && board.get(proposal).getColour() != colour;
+        return !board.isSpaceEmpty(proposal, board)
+                && !board.outOfBounds(proposal)
+                && board.get(proposal).getColour() != colour;
     }
 
     // TODO replace with direction setter
@@ -65,9 +67,6 @@ public class Pawn extends AbstractPiece {
         return moveProposals;
     }
 
-    public boolean isSpaceEmpty(Coordinates proposal, Board board){
-        return board.get(proposal) == null;
-    }
 
     public boolean onStartRow(Coordinates from){
 
