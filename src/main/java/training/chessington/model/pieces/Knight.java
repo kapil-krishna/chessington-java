@@ -28,40 +28,14 @@ public class Knight extends AbstractPiece {
                 from.plus(-2, 1),
                 from.plus(-2, -1));
 
-        for (int i = 0; i < possibleCoords.size(); i++) {
-            if ((board.isSpaceEmpty(possibleCoords.get(i), board))
-                    || (colour != board.get(possibleCoords.get(i)).getColour())
-                    && !(board.outOfBounds(possibleCoords.get(i)))) {
-                allowedMoves.add(new Move(from, possibleCoords.get(i)));
+        for (Coordinates coords : possibleCoords) {
+            if ((board.isSpaceEmpty(coords, board))
+                    || (colour != board.get(coords).getColour())
+                    && !(board.outOfBounds(coords))) {
+                allowedMoves.add(new Move(from, coords));
                 }
             }
 
-//        if (!(board.outOfBounds(from.plus(1,2)))) {
-//            allowedMoves.add(new Move(from, from.plus(1,2)));
-//        }
-//        if (!(board.outOfBounds(from.plus(1,-2)))) {
-//            allowedMoves.add(new Move(from, from.plus(1,-2)));
-//        }
-//        if (!(board.outOfBounds(from.plus(-1,2)))) {
-//            allowedMoves.add(new Move(from, from.plus(-1,2)));
-//        }
-//        if (!(board.outOfBounds(from.plus(-1,-2)))) {
-//            allowedMoves.add(new Move(from, from.plus(-1,-2)));
-//        }
-//        if (!(board.outOfBounds(from.plus(2,1)))) {
-//            allowedMoves.add(new Move(from, from.plus(2,1)));
-//        }
-//        if (!(board.outOfBounds(from.plus(2,-1)))) {
-//            allowedMoves.add(new Move(from, from.plus(2,-1)));
-//        }
-//        if (!(board.outOfBounds(from.plus(-2,1)))) {
-//            allowedMoves.add(new Move(from, from.plus(-2,1)));
-//        }
-//        if (!(board.outOfBounds(from.plus(-2,-1)))) {
-//            allowedMoves.add(new Move(from, from.plus(-2,-1)));
-//        }
-        {
-            return allowedMoves;
-        }
+        return allowedMoves;
     }
 }

@@ -50,14 +50,21 @@ public class Board {
         board[coords.getRow()][coords.getCol()] = piece;
     }
 
-    public Boolean outOfBounds(Coordinates toCheck){
+    public boolean outOfBounds(Coordinates toCheck){
         return  toCheck.getRow() > 7 ||
                 toCheck.getRow() < 0 ||
                 toCheck.getCol() > 7 ||
                 toCheck.getCol() < 0;
     }
 
+    public boolean inBounds (Coordinates toCheck) {
+        return ((toCheck.getRow() <= 7 && toCheck.getRow() >= 0) &&
+                (toCheck.getCol() <= 7 && toCheck.getCol() >= 0));
+        }
+        
     public boolean isSpaceEmpty(Coordinates proposal, Board board){
+        if (outOfBounds(proposal)) {
+        }
         return board.get(proposal) == null;
     }
 
