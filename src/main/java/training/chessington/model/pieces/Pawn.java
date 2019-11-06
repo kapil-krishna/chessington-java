@@ -30,7 +30,6 @@ public class Pawn extends AbstractPiece {
                 }
             }
         }
-
         Coordinates captureRight = moveProposal(from, 1, 1);
         Coordinates captureLeft = moveProposal(from, 1, -1);
 
@@ -39,7 +38,7 @@ public class Pawn extends AbstractPiece {
                 allowedMoves.add(new Move(from, captureRight));
             }
         }
-        if (!(board.outOfBounds(captureRight))) {
+        if (!(board.outOfBounds(captureLeft))) {
             if (canCapture(captureLeft, board)) {
                 allowedMoves.add(new Move(from, captureLeft));
             }
@@ -50,11 +49,10 @@ public class Pawn extends AbstractPiece {
 
     public boolean canCapture(Coordinates proposal, Board board) {
         if (!(board.outOfBounds(proposal))) {
-            if (!board.isSpaceEmpty(proposal, board)
-                    && board.get(proposal).getColour() != colour) {
-
-            }
+            return (!board.isSpaceEmpty(proposal, board)
+                    && board.get(proposal).getColour() != colour);
         }
+        return false;
     }
 
     // TODO replace with direction setter

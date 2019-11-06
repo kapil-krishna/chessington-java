@@ -29,23 +29,14 @@ public class Knight extends AbstractPiece {
                 from.plus(-2, -1));
 
         for (Coordinates coords : possibleCoords) {
-<<<<<<< Updated upstream
-            if ((board.isSpaceEmpty(coords, board))
-                    || (colour != board.get(coords).getColour())
-                    && !(board.outOfBounds(coords))) {
-                allowedMoves.add(new Move(from, coords));
-                }
-            }
-
-=======
             if (!(board.outOfBounds(coords))) {
                 if ((board.isSpaceEmpty(coords, board))
-                    || (colour != board.get(coords).getColour())) {
+                        || (colour != board.get(coords).getColour())) {
                     allowedMoves.add(new Move(from, coords));
                 }
             }
         }
->>>>>>> Stashed changes
+
         return allowedMoves;
     }
 }
