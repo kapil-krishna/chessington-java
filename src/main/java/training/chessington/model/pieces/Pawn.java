@@ -48,11 +48,12 @@ public class Pawn extends AbstractPiece {
     }
 
     public boolean canCapture(Coordinates proposal, Board board) {
+        boolean result = true;
         if (!(board.outOfBounds(proposal))) {
-            return (!board.isSpaceEmpty(proposal, board)
+            result = (!board.isSpaceEmpty(proposal, board)
                     && board.get(proposal).getColour() != colour);
         }
-        return false;
+        return result;
     }
 
     // TODO replace with direction setter
