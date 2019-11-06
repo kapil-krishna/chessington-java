@@ -18,38 +18,43 @@ public class Pawn extends AbstractPiece {
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
 
         List<Move> allowedMoves = new ArrayList();
-        if (board.outOfBounds(from)) { return allowedMoves; }
 
         final int range = onStartRow(from) ? 2 : 1;
 
         List<Coordinates> proposals = getHorizontalProposals(from, range);
 
-        for (Coordinates proposal : proposals){
-
-            if (board.isSpaceEmpty(proposal, board)){
-                //TODO maybe bounds check here
-                allowedMoves.add(new Move(from, proposal));
+        for (Coordinates proposal : proposals) {
+            if (!(board.outOfBounds(proposal))) {
+                if (board.isSpaceEmpty(proposal, board)) {
+                    allowedMoves.add(new Move(from, proposal));
+                }
             }
         }
 
         Coordinates captureRight = moveProposal(from, 1, 1);
         Coordinates captureLeft = moveProposal(from, 1, -1);
 
-        if (canCapture(captureRight, board)) {
-            allowedMoves.add(new Move(from, captureRight));
+        if (!(board.outOfBounds(captureRight)))  {
+            if (canCapture(captureRight, board)) {
+                allowedMoves.add(new Move(from, captureRight));
+            }
         }
-
-        if (canCapture(captureLeft, board)) {
-            allowedMoves.add(new Move(from, captureLeft));
+        if (!(board.outOfBounds(captureRight))) {
+            if (canCapture(captureLeft, board)) {
+                allowedMoves.add(new Move(from, captureLeft));
+            }
         }
 
         return allowedMoves;
     }
 
-    public boolean canCapture(Coordinates proposal, Board board){
-        return !board.isSpaceEmpty(proposal, board)
-                && !board.outOfBounds(proposal)
-                && board.get(proposal).getColour() != colour;
+    public boolean canCapture(Coordinates proposal, Board board) {
+        if (!(board.outOfBounds(proposal))) {
+            if (!board.isSpaceEmpty(proposal, board)
+                    && board.get(proposal).getColour() != colour) {
+
+            }
+        }
     }
 
     // TODO replace with direction setter

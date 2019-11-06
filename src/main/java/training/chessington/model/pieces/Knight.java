@@ -17,7 +17,7 @@ public class Knight extends AbstractPiece {
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
 
-        List<Move> allowedMoves = new ArrayList<Move>();
+        List<Move> allowedMoves = new ArrayList<>();
 
         List<Coordinates> possibleCoords = List.of(from.plus(1, 2),
                 from.plus(1, -2),
@@ -29,6 +29,7 @@ public class Knight extends AbstractPiece {
                 from.plus(-2, -1));
 
         for (Coordinates coords : possibleCoords) {
+<<<<<<< Updated upstream
             if ((board.isSpaceEmpty(coords, board))
                     || (colour != board.get(coords).getColour())
                     && !(board.outOfBounds(coords))) {
@@ -36,6 +37,15 @@ public class Knight extends AbstractPiece {
                 }
             }
 
+=======
+            if (!(board.outOfBounds(coords))) {
+                if ((board.isSpaceEmpty(coords, board))
+                    || (colour != board.get(coords).getColour())) {
+                    allowedMoves.add(new Move(from, coords));
+                }
+            }
+        }
+>>>>>>> Stashed changes
         return allowedMoves;
     }
 }
